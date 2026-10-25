@@ -3,99 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Smart TV Real</title>
+    <title>Control Remoto Universal Wi-Fi</title>
     <style>
         body {
-            background: #14141f; color: white;
-            font-family: Arial, sans-serif;
-            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .config-panel {
-            background: #222; padding: 15px; border-radius: 10px; margin-bottom: 20px; width: 300px;
+
+        .remote-container {
+            background: #1e1e1e;
+            border-radius: 30px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 100%;
+            max-width: 320px;
+            border: 2px solid #333;
         }
-        .config-panel input {
-            width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: none;
+
+        .config-box {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
-        .remote {
-            background: #282830; padding: 20px; border-radius: 30px; width: 300px;
-            display: flex; flex-direction: column; gap: 15px; align-items: center;
+
+        .config-box label {
+            font-size: 12px;
+            color: #aaa;
+            display: block;
+            margin-bottom: 5px;
         }
-        .row { display: flex; gap: 15px; justify-content: center; width: 100%; }
+
+        .config-box input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #111;
+            color: #00ffcc;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .screen {
+            background: #000;
+            color: #00ffcc;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #00ffcc;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
         button {
-            background: #333; color: white; border: none; padding: 15px; border-radius: 10px;
-            cursor: pointer; font-weight: bold; width: 60px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
         }
-        button:active { background: #555; }
-        .btn-power { background: #d9534f; border-radius: 50%; width: 50px; height: 50px; }
-        #status { margin-top: 15px; color: #00ffcc; font-size: 14px; text-align: center;}
+
+        button:active {
+            background: #555;
+            transform: scale(0.9);
+        }
+
+        .btn-power {
+            background: #e53935;
+        }
+        .btn-power:active {
+            background: #b71c1c;
+        }
+
+        .d-pad {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 5px;
+            justify-items: center;
+            align-items: center;
+            margin: 20px 0;
+            background: #252525;
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .d-pad button {
+            background: #444;
+        }
+
+        .btn-ok {
+            background: #00ffcc !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+
+        .btn-rect {
+            border-radius: 10px;
+            width: 60px;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <div class="config-panel">
-        <label>IP de la Smart TV (Ej: 192.168.1.50):</label>
-        <input type="text" id="tv-ip" placeholder="192.168.1.X" value="192.168.1.100">
-    </div>
-
-    <div class="remote">
-        <div class="row">
-            <button class="btn-power" onclick="sendCommand('Power')">⏻</button>
-            <button onclick="sendCommand('Home')">🏠</button>
-        </div>
+    <div class="remote-container">
         
-        <div class="row" style="flex-direction: column; align-items: center; background: #1a1a20; padding: 15px; border-radius: 50%;">
-            <button onclick="sendCommand('Up')">▲</button>
-            <div class="row">
-                <button onclick="sendCommand('Left')">◀</button>
-                <button onclick="sendCommand('Select')" style="background:#444;">OK</button>
-                <button onclick="sendCommand('Right')">▶</button>
-            </div>
-            <button onclick="sendCommand('Down')">▼</button>
+        <div class="config-box">
+            <label>Dirección IP de la TV (Ej. 192.168.1.50):</label>
+            <input type="text" id="tv-ip" placeholder="192.168.1.X">
         </div>
 
-        <div class="row">
-            <button onclick="sendCommand('VolumeDown')">Vol -</button>
-            <button onclick="sendCommand('VolumeMute')">Mute</button>
-            <button onclick="sendCommand('VolumeUp')">Vol +</button>
+        <div class="screen" id="status-screen">Listo para enviar</div>
+
+        <div class="button-row">
+            <button class="btn-power" onclick="sendSignal('Power', '114')">⏻</button>
+            <button onclick="sendSignal('Home', '3')">🏠</button>
+            <button onclick="sendSignal('Mute', '164')">🔇</button>
+        </div>
+
+        <div class="d-pad">
+            <div></div>
+            <button onclick="sendSignal('Up', '19')">▲</button>
+            <div></div>
+            <button onclick="sendSignal('Left', '21')">◀</button>
+            <button class="btn-ok" onclick="sendSignal('Enter', '66')">OK</button>
+            <button onclick="sendSignal('Right', '22')">▶</button>
+            <div></div>
+            <button onclick="sendSignal('Down', '20')">▼</button>
+            <div></div>
+        </div>
+
+        <div class="button-row">
+            <button class="btn-rect" onclick="sendSignal('VolumeDown', '25')">VOL -</button>
+            <button class="btn-rect" onclick="sendSignal('VolumeUp', '24')">VOL +</button>
         </div>
         
-        <div id="status">Esperando comando...</div>
+        <div class="button-row">
+            <button class="btn-rect" onclick="sendSignal('ChannelDown', '2')">CH -</button>
+            <button class="btn-rect" onclick="sendSignal('ChannelUp', '1')">CH +</button>
+        </div>
+
     </div>
 
     <script>
-        // Función real que se comunica con la API de la TV en la red local
-        async function sendCommand(key) {
-            const ip = document.getElementById('tv-ip').value;
-            const statusDisplay = document.getElementById('status');
-            
+        function sendSignal(actionName, androidKeyCode) {
+            const ip = document.getElementById('tv-ip').value.trim();
+            const screen = document.getElementById('status-screen');
+
             if (!ip) {
-                statusDisplay.style.color = '#ff4d4d';
-                statusDisplay.textContent = 'Error: Ingresa la IP de la TV';
+                screen.style.color = '#ff4444';
+                screen.style.borderColor = '#ff4444';
+                screen.innerText = 'Falta IP de la TV';
                 return;
             }
 
-            statusDisplay.style.color = '#fff';
-            statusDisplay.textContent = `Enviando '${key}'...`;
+            // Actualizar interfaz para mostrar que el código se está ejecutando
+            screen.style.color = '#00ffcc';
+            screen.style.borderColor = '#00ffcc';
+            screen.innerText = `Enviando: ${actionName}...`;
 
-            // Esta URL es el estándar para TVs con sistema Roku
-            // Para otras marcas (LG, Samsung), la URL y el método (fetch/websocket) cambia drásticamente.
-            const url = `http://${ip}:8060/keypress/${key}`;
+            // MÉTODO 1: API HTTP estándar (Roku / genéricas)
+            const urlHttp = `http://${ip}:8060/keypress/${actionName}`;
+            fetch(urlHttp, { method: 'POST', mode: 'no-cors' }).catch(() => {});
 
-            try {
-                // Se envía la petición por la red Wi-Fi
-                const response = await fetch(url, {
+            // MÉTODO 2: API de control basada en KeyCodes (usado por algunas Android TV/Caixun vía red local)
+            const urlAndroid = `http://${ip}:8008/apps/vr/keycode/${androidKeyCode}`;
+            fetch(urlAndroid, { method: 'POST', mode: 'no-cors' }).catch(() => {});
+
+            // MÉTODO 3: Envío UPnP SOAP Genérico (Volumen/Mute en Smart TVs)
+            if(actionName === 'VolumeUp' || actionName === 'VolumeDown') {
+                const soapBody = `<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:SetVolume xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"><InstanceID>0</InstanceID><Channel>Master</Channel><DesiredVolume>${actionName === 'VolumeUp' ? '10' : '-10'}</DesiredVolume></u:SetVolume></s:Body></s:Envelope>`;
+                const urlUpnp = `http://${ip}:52235/upnp/control/RenderingControl1`;
+                fetch(urlUpnp, {
                     method: 'POST',
-                    mode: 'no-cors' // Necesario para evitar bloqueos del navegador en redes locales
-                });
-                
-                statusDisplay.style.color = '#00ffcc';
-                statusDisplay.textContent = `Comando '${key}' enviado con éxito`;
-                
-            } catch (error) {
-                console.error('Error de conexión:', error);
-                statusDisplay.style.color = '#ff4d4d';
-                statusDisplay.textContent = 'Error: No se pudo conectar a la TV';
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/xml', 'SOAPACTION': '"urn:schemas-upnp-org:service:RenderingControl:1#SetVolume"' },
+                    body: soapBody
+                }).catch(() => {});
             }
+
+            // Confirmación visual
+            setTimeout(() => {
+                screen.innerText = `Señal '${actionName}' transmitida`;
+            }, 600);
         }
     </script>
 </body>
