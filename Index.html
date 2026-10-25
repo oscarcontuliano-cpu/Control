@@ -3,265 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control Remoto Virtual</title>
+    <title>Control Smart TV Real</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #14141f, #202030);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            background: #14141f; color: white;
+            font-family: Arial, sans-serif;
+            display: flex; flex-direction: column; align-items: center; padding: 20px;
         }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 340px;
+        .config-panel {
+            background: #222; padding: 15px; border-radius: 10px; margin-bottom: 20px; width: 300px;
         }
-
-        /* Pantalla de estado */
-        .screen {
-            background-color: #0b0b10;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 15px;
-            width: 100%;
-            text-align: center;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.9);
+        .config-panel input {
+            width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: none;
         }
-
-        .screen h3 {
-            font-size: 11px;
-            color: #777;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        #status-display {
-            font-size: 15px;
-            color: #00ffcc;
-            font-weight: 600;
-            min-height: 22px;
-            text-shadow: 0 0 8px rgba(0,255,204,0.3);
-            transition: opacity 0.1s ease;
-        }
-
-        /* Diseño del Control Remoto */
         .remote {
-            background: linear-gradient(145deg, #282830, #1a1a20);
-            border-radius: 40px;
-            padding: 25px 20px;
-            width: 100%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-            border: 1px solid #3a3a45;
+            background: #282830; padding: 20px; border-radius: 30px; width: 300px;
+            display: flex; flex-direction: column; gap: 15px; align-items: center;
         }
-
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* Estilo base de los botones */
+        .row { display: flex; gap: 15px; justify-content: center; width: 100%; }
         button {
-            background: #33333d;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.1s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.1);
-            outline: none;
-            user-select: none;
+            background: #333; color: white; border: none; padding: 15px; border-radius: 10px;
+            cursor: pointer; font-weight: bold; width: 60px;
         }
-
-        button:active, button.clicked {
-            transform: scale(0.93);
-            box-shadow: 0 2px 3px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.6);
-            background: #222228 !important;
-        }
-
-        /* Botón de Encendido (Power) */
-        .btn-power {
-            background: #d9534f;
-            color: white;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4), inset 0 1px 2px rgba(255,255,255,0.2);
-        }
-        .btn-power:active {
-            background: #b52b27 !important;
-        }
-
-        /* Botones redondos estándar */
-        .btn-round {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #3a3a45;
-        }
-
-        /* Pad de Navegación Direccional (D-Pad) */
-        .d-pad-container {
-            position: relative;
-            width: 165px;
-            height: 165px;
-            background: #22222b;
-            border-radius: 50%;
-            margin: 0 auto;
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 2px 5px rgba(255,255,255,0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .d-btn {
-            position: absolute;
-            background: #353540;
-            border: none;
-            color: white;
-            cursor: pointer;
-            transition: background 0.15s;
-        }
-
-        .d-btn:active {
-            background: #505060;
-        }
-
-        .btn-up { top: 4px; left: 50%; transform: translateX(-50%); width: 52px; height: 42px; border-radius: 26px 26px 6px 6px; }
-        .btn-down { bottom: 4px; left: 50%; transform: translateX(-50%); width: 52px; height: 42px; border-radius: 6px 6px 26px 26px; }
-        .btn-left { left: 4px; top: 50%; transform: translateY(-50%); width: 42px; height: 52px; border-radius: 26px 6px 6px 26px; }
-        .btn-right { right: 4px; top: 50%; transform: translateY(-50%); width: 42px; height: 52px; border-radius: 6px 26px 26px 6px; }
-        
-        .btn-ok {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: #444452;
-            font-weight: bold;
-            font-size: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            z-index: 2;
-        }
-        .btn-ok:active {
-            background: #30303a !important;
-        }
-
-        /* Botones de Volumen y Canal */
-        .btn-bar {
-            width: 65px;
-            height: 36px;
-            border-radius: 8px;
-            background: #383842;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        /* Accesos directos a Apps */
-        .app-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .btn-app {
-            flex: 1;
-            border-radius: 8px;
-            height: 34px;
-            font-size: 11px;
-            font-weight: bold;
-            background: #2e2e38;
-            letter-spacing: 0.5px;
-        }
-        
-        .btn-netflix { color: #e50914; }
-        .btn-prime { color: #00a8e1; }
-        .btn-youtube { color: #ff4d4d; }
+        button:active { background: #555; }
+        .btn-power { background: #d9534f; border-radius: 50%; width: 50px; height: 50px; }
+        #status { margin-top: 15px; color: #00ffcc; font-size: 14px; text-align: center;}
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Pantalla de Estado -->
-        <div class="screen">
-            <h3>Estado del Sistema</h3>
-            <div id="status-display">Control listo y conectado</div>
+    <div class="config-panel">
+        <label>IP de la Smart TV (Ej: 192.168.1.50):</label>
+        <input type="text" id="tv-ip" placeholder="192.168.1.X" value="192.168.1.100">
+    </div>
+
+    <div class="remote">
+        <div class="row">
+            <button class="btn-power" onclick="sendCommand('Power')">⏻</button>
+            <button onclick="sendCommand('Home')">🏠</button>
+        </div>
+        
+        <div class="row" style="flex-direction: column; align-items: center; background: #1a1a20; padding: 15px; border-radius: 50%;">
+            <button onclick="sendCommand('Up')">▲</button>
+            <div class="row">
+                <button onclick="sendCommand('Left')">◀</button>
+                <button onclick="sendCommand('Select')" style="background:#444;">OK</button>
+                <button onclick="sendCommand('Right')">▶</button>
+            </div>
+            <button onclick="sendCommand('Down')">▼</button>
         </div>
 
-        <!-- Cuerpo del Control Remoto -->
-        <div class="remote">
-            
-            <!-- Fila Superior: Power, Ajustes, Mute -->
-            <div class="row">
-                <button class="btn-power" onclick="pressButton('Power (Encendido)')">⏻</button>
-                <button class="btn-round" onclick="pressButton('Ajustes')">⚙</button>
-                <button class="btn-round" onclick="pressButton('Silenciar (Mute)')">🔇</button>
-            </div>
-
-            <!-- Accesos directos de Apps -->
-            <div class="app-buttons">
-                <button class="btn-app btn-netflix" onclick="pressButton('Netflix')">NETFLIX</button>
-                <button class="btn-app btn-prime" onclick="pressButton('Prime Video')">PRIME</button>
-                <button class="btn-app btn-youtube" onclick="pressButton('YouTube')">YOUTUBE</button>
-            </div>
-
-            <!-- Panel Direccional (D-Pad) -->
-            <div class="d-pad-container">
-                <button class="d-btn btn-up" onclick="pressButton('Arriba')">▲</button>
-                <button class="d-btn btn-left" onclick="pressButton('Izquierda')">◀</button>
-                <button class="d-btn btn-right" onclick="pressButton('Derecha')">▶</button>
-                <button class="d-btn btn-down" onclick="pressButton('Abajo')">▼</button>
-                <button class="btn-ok" onclick="pressButton('OK / Seleccionar')">OK</button>
-            </div>
-
-            <!-- Fila de Volúmenes y Canales -->
-            <div class="row">
-                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
-                    <span style="font-size: 10px; color: #888; font-weight: bold;">VOL</span>
-                    <button class="btn-bar" onclick="pressButton('Volumen +')">＋</button>
-                    <button class="btn-bar" onclick="pressButton('Volumen -')">－</button>
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
-                    <span style="font-size: 10px; color: #888; font-weight: bold;">CH</span>
-                    <button class="btn-bar" onclick="pressButton('Canal Arriba')">CH ∧</button>
-                    <button class="btn-bar" onclick="pressButton('Canal Abajo')">CH ∨</button>
-                </div>
-            </div>
-
-            <!-- Botones multimedia inferiores -->
-            <div class="row">
-                <button class="btn-round" onclick="pressButton('Retroceder')">⏮</button>
-                <button class="btn-round" onclick="pressButton('Reproducir / Pausa')">⏯</button>
-                <button class="btn-round" onclick="pressButton('Avanzar')">⏭</button>
-                <button class="btn-round" onclick="pressButton('Home / Inicio')">🏠</button>
-            </div>
-
+        <div class="row">
+            <button onclick="sendCommand('VolumeDown')">Vol -</button>
+            <button onclick="sendCommand('VolumeMute')">Mute</button>
+            <button onclick="sendCommand('VolumeUp')">Vol +</button>
         </div>
+        
+        <div id="status">Esperando comando...</div>
     </div>
 
     <script>
-        function pressButton(actionName) {
-            const display = document.getElementById('status-display');
-            display.style.opacity = '0.
+        // Función real que se comunica con la API de la TV en la red local
+        async function sendCommand(key) {
+            const ip = document.getElementById('tv-ip').value;
+            const statusDisplay = document.getElementById('status');
+            
+            if (!ip) {
+                statusDisplay.style.color = '#ff4d4d';
+                statusDisplay.textContent = 'Error: Ingresa la IP de la TV';
+                return;
+            }
+
+            statusDisplay.style.color = '#fff';
+            statusDisplay.textContent = `Enviando '${key}'...`;
+
+            // Esta URL es el estándar para TVs con sistema Roku
+            // Para otras marcas (LG, Samsung), la URL y el método (fetch/websocket) cambia drásticamente.
+            const url = `http://${ip}:8060/keypress/${key}`;
+
+            try {
+                // Se envía la petición por la red Wi-Fi
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors' // Necesario para evitar bloqueos del navegador en redes locales
+                });
+                
+                statusDisplay.style.color = '#00ffcc';
+                statusDisplay.textContent = `Comando '${key}' enviado con éxito`;
+                
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                statusDisplay.style.color = '#ff4d4d';
+                statusDisplay.textContent = 'Error: No se pudo conectar a la TV';
+            }
+        }
+    </script>
+</body>
+</html>
