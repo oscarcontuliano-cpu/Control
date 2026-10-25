@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+            background: linear-gradient(135deg, #14141f, #202030);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -28,45 +28,49 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            width: 100%;
+            max-width: 340px;
         }
 
         /* Pantalla de estado */
         .screen {
-            background-color: #111;
-            border: 2px solid #444;
-            border-radius: 8px;
-            padding: 12px 20px;
-            width: 300px;
+            background-color: #0b0b10;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
             text-align: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.9);
         }
 
         .screen h3 {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 4px;
+            font-size: 11px;
+            color: #777;
+            margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         #status-display {
-            font-size: 16px;
+            font-size: 15px;
             color: #00ffcc;
-            font-weight: bold;
-            min-height: 24px;
+            font-weight: 600;
+            min-height: 22px;
+            text-shadow: 0 0 8px rgba(0,255,204,0.3);
+            transition: opacity 0.1s ease;
         }
 
         /* Diseño del Control Remoto */
         .remote {
-            background: linear-gradient(145deg, #2b2b2b, #1f1f1f);
-            border-radius: 35px;
+            background: linear-gradient(145deg, #282830, #1a1a20);
+            border-radius: 40px;
             padding: 25px 20px;
-            width: 280px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.1);
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.1);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            border: 1px solid #444;
+            gap: 22px;
+            border: 1px solid #3a3a45;
         }
 
         .row {
@@ -76,27 +80,25 @@
             width: 100%;
         }
 
-        /* Estilo general de los botones */
+        /* Estilo base de los botones */
         button {
-            background: #333;
+            background: #33333d;
             border: none;
             color: #fff;
-            padding: 12px;
-            border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.15s ease;
+            transition: all 0.1s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.1);
             outline: none;
+            user-select: none;
         }
 
-        button:active {
-            transform: scale(0.92);
-            box-shadow: 0 2px 3px rgba(0,0,0,0.3), inset 0 1px 1px rgba(0,0,0,0.5);
-            background: #222;
+        button:active, button.clicked {
+            transform: scale(0.93);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.3), inset 0 2px 4px rgba(0,0,0,0.6);
+            background: #222228 !important;
         }
 
         /* Botón de Encendido (Power) */
@@ -107,28 +109,29 @@
             width: 45px;
             height: 45px;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(217, 83, 79, 0.4), inset 0 1px 2px rgba(255,255,255,0.2);
         }
         .btn-power:active {
-            background: #b52b27;
+            background: #b52b27 !important;
         }
 
-        /* Botones redondos pequeños / medianos */
+        /* Botones redondos estándar */
         .btn-round {
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: #3a3a3a;
+            background: #3a3a45;
         }
 
         /* Pad de Navegación Direccional (D-Pad) */
         .d-pad-container {
             position: relative;
-            width: 160px;
-            height: 160px;
-            background: #252525;
+            width: 165px;
+            height: 165px;
+            background: #22222b;
             border-radius: 50%;
             margin: 0 auto;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.5);
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.6), 0 2px 5px rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -136,39 +139,42 @@
 
         .d-btn {
             position: absolute;
-            background: #383838;
+            background: #353540;
             border: none;
             color: white;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.15s;
         }
 
         .d-btn:active {
-            background: #555;
+            background: #505060;
         }
 
-        .btn-up { top: 5px; left: 50%; transform: translateX(-50%); width: 50px; height: 40px; border-radius: 25px 25px 5px 5px; }
-        .btn-down { bottom: 5px; left: 50%; transform: translateX(-50%); width: 50px; height: 40px; border-radius: 5px 5px 25px 25px; }
-        .btn-left { left: 5px; top: 50%; transform: translateY(-50%); width: 40px; height: 50px; border-radius: 25px 5px 5px 25px; }
-        .btn-right { right: 5px; top: 50%; transform: translateY(-50%); width: 40px; height: 50px; border-radius: 5px 25px 25px 5px; }
+        .btn-up { top: 4px; left: 50%; transform: translateX(-50%); width: 52px; height: 42px; border-radius: 26px 26px 6px 6px; }
+        .btn-down { bottom: 4px; left: 50%; transform: translateX(-50%); width: 52px; height: 42px; border-radius: 6px 6px 26px 26px; }
+        .btn-left { left: 4px; top: 50%; transform: translateY(-50%); width: 42px; height: 52px; border-radius: 26px 6px 6px 26px; }
+        .btn-right { right: 4px; top: 50%; transform: translateY(-50%); width: 42px; height: 52px; border-radius: 6px 26px 26px 6px; }
         
         .btn-ok {
-            width: 55px;
-            height: 55px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
-            background: #444;
+            background: #444452;
             font-weight: bold;
             font-size: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
             z-index: 2;
         }
+        .btn-ok:active {
+            background: #30303a !important;
+        }
 
-        /* Botones alargados / rectangulares (Volumen / Canal) */
+        /* Botones de Volumen y Canal */
         .btn-bar {
-            width: 60px;
-            height: 35px;
+            width: 65px;
+            height: 36px;
             border-radius: 8px;
-            background: #383838;
+            background: #383842;
             font-size: 13px;
             font-weight: bold;
         }
@@ -182,16 +188,17 @@
 
         .btn-app {
             flex: 1;
-            border-radius: 6px;
-            height: 32px;
+            border-radius: 8px;
+            height: 34px;
             font-size: 11px;
             font-weight: bold;
-            background: #333;
+            background: #2e2e38;
+            letter-spacing: 0.5px;
         }
         
         .btn-netflix { color: #e50914; }
         .btn-prime { color: #00a8e1; }
-        .btn-youtube { color: #ff0000; }
+        .btn-youtube { color: #ff4d4d; }
     </style>
 </head>
 <body>
@@ -200,15 +207,15 @@
         <!-- Pantalla de Estado -->
         <div class="screen">
             <h3>Estado del Sistema</h3>
-            <div id="status-display">Control listo</div>
+            <div id="status-display">Control listo y conectado</div>
         </div>
 
         <!-- Cuerpo del Control Remoto -->
         <div class="remote">
             
-            <!-- Fila Superior: Power y Mute -->
+            <!-- Fila Superior: Power, Ajustes, Mute -->
             <div class="row">
-                <button class="btn-power" onclick="pressButton('Power (Encendido/Apagado)')">⏻</button>
+                <button class="btn-power" onclick="pressButton('Power (Encendido)')">⏻</button>
                 <button class="btn-round" onclick="pressButton('Ajustes')">⚙</button>
                 <button class="btn-round" onclick="pressButton('Silenciar (Mute)')">🔇</button>
             </div>
@@ -231,13 +238,13 @@
 
             <!-- Fila de Volúmenes y Canales -->
             <div class="row">
-                <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
-                    <span style="font-size: 10px; color: #aaa;">VOL</span>
+                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+                    <span style="font-size: 10px; color: #888; font-weight: bold;">VOL</span>
                     <button class="btn-bar" onclick="pressButton('Volumen +')">＋</button>
                     <button class="btn-bar" onclick="pressButton('Volumen -')">－</button>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 5px; align-items: center;">
-                    <span style="font-size: 10px; color: #aaa;">CH</span>
+                <div style="display: flex; flex-direction: column; gap: 6px; align-items: center;">
+                    <span style="font-size: 10px; color: #888; font-weight: bold;">CH</span>
                     <button class="btn-bar" onclick="pressButton('Canal Arriba')">CH ∧</button>
                     <button class="btn-bar" onclick="pressButton('Canal Abajo')">CH ∨</button>
                 </div>
@@ -257,14 +264,4 @@
     <script>
         function pressButton(actionName) {
             const display = document.getElementById('status-display');
-            display.textContent = `Acción: ${actionName}`;
-            
-            // Efecto sutil de parpadeo en el texto
-            display.style.opacity = '0.4';
-            setTimeout(() => {
-                display.style.opacity = '1';
-            }, 150);
-        }
-    </script>
-</body>
-</html>
+            display.style.opacity = '0.
